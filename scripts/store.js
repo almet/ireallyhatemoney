@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-
+import Offline from "./offline";
 
 export class Store extends EventEmitter {
 
@@ -7,6 +7,12 @@ export class Store extends EventEmitter {
     super();
     this.state = {items: []};
     this.collection = kinto.collection(collection);
+
+    // XXX Waiting for kinto offline management.
+    Offline.on('up', () => { this.sync(); });
+    // XXX Waiting for push notif.
+    setTimeout(30000, () => { this.sync(); });
+    this.sync();
   }
 
   onError(error) {
@@ -28,8 +34,15 @@ export class Store extends EventEmitter {
       .then(res => {
         this.state.items.push(res.data);
         this.emit("change", this.state);
-      })
-      .catch(this.onError.bind(this));
+        // Do not wait for the sync before resolving.
+        this.sync();
+    }).catch(this.onError.bind(this));
+  }
+
+  enqueueSync() {
+      if(Offline.state == "up"){
+          sync();
+      }
   }
 
   sync() {

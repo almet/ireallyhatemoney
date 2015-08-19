@@ -18,7 +18,7 @@ const project = "public-demo";
 const userpass64 = btoa(project + ":s3cr3t");
 
 // Use Mozilla demo server with Basic authentication:
-const server = "http://localhost:8888/v1";
+const server = "https://kinto.dev.mozaws.net/v1";
 const auth = "Basic " + userpass64;
 const options = {
     remote: server,
