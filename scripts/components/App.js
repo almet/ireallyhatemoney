@@ -98,7 +98,7 @@ export class Bills extends React.Component {
   render() {
     return (
       <div id="billList">
-          <table className="table">
+          <table className="table table-striped">
               <thead>
                   <tr><th>Who paid?</th><th>What?</th><th>How much?</th><th>For whom?</th><th>Date</th></tr>
               </thead>
