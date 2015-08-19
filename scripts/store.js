@@ -10,6 +10,7 @@ export class Store extends EventEmitter {
   }
 
   onError(error) {
+      console.log(error);
     this.emit("error", error);
   }
 

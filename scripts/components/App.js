@@ -2,6 +2,12 @@ import React from "react";
 import { Link } from "react-router";
 
 export class BillCreationForm extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+          action: "submit-and-redirect"
+      }
+  }
 
   clearForm() {
       var list = document.querySelectorAll("#bill-creation-form input");
@@ -10,15 +16,18 @@ export class BillCreationForm extends React.Component {
 
   onFormSubmit(event) {
       event.preventDefault();
-      var clicked = event.nativeEvent.explicitOriginalTarget.id;
+      var e = event;
 
       this.handleFormEvent(event);
-      console.log("cliked");
-      if (clicked === "submit-and-clear") {
+      if (this.state.action === "submit-and-clear") {
           this.clearForm();
-      } else if (clicked === "submit-and-redirect"){
+      } else if (this.state.action === "submit-and-redirect"){
           this.context.router.transitionTo('bill-list');
       }
+  }
+
+  onClick(action) {
+      this.state.action = action;
   }
 
   handleFormEvent(event) {
@@ -48,28 +57,28 @@ export class BillCreationForm extends React.Component {
     return (
       <form id="bill-creation-form" onSubmit={this.onFormSubmit.bind(this)}>
           <div className="form-group">
-              <label for="payer">payer</label>
+              <label htmlFor="payer">payer</label>
               <input id="payer" className="form-control" name="payer" type="text" />
           </div>
           <div className="form-group">
-              <label for="owers">owers</label>
+              <label htmlFor="owers">owers</label>
               <input id="owers" className="form-control" name="owers" type="text" />
           </div>
           <div className="form-group">
-              <label for="amount">amount</label>
+              <label htmlFor="amount">amount</label>
               <input id="amount" className="form-control" name="amount" type="float" />
           </div>
           <div className="form-group">
-              <label for="description">description</label>
+              <label htmlFor="description">description</label>
               <input id="description" className="form-control" name="description" type="text" />
           </div>
           <div className="form-group">
-              <label for="date">date</label>
+              <label htmlFor="date">date</label>
               <input id="date" className="form-control" name="date" type="date" />
           </div>
 
-          <button id="submit-and-redirect" type="submit" className="btn btn-primary">Submit</button>
-          <button id="submit-and-clear" type="submit" className="btn btn-default">Submit and add a new one</button>
+          <button type="submit" className="btn btn-primary" onClick={() => this.onClick("submit-and-redirect") }>Submit</button>
+          <button type="submit" className="btn btn-default" onClick={() => this.onClick("submit-and-clear") }>Submit and add a new one</button>
       </form>
     );
   }
