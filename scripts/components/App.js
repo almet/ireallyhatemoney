@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export class Form extends React.Component {
+export class BillCreationForm extends React.Component {
 
   onFormSubmit(event) {
     event.preventDefault();
@@ -11,16 +11,36 @@ export class Form extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.onFormSubmit.bind(this)}>
-        <input name="label" type="text" />
-        <button type="submit">Add</button>
+      <form id="bill-creation-form" onSubmit={this.onFormSubmit.bind(this)}>
+          <div className="form-group">
+              <label for="payer">payer</label>
+              <input id="payer" className="form-control" name="payer" type="text" />
+          </div>
+          <div className="form-group">
+              <label for="owers">owers</label>
+              <input id="owers" className="form-control" name="owers" type="text" />
+          </div>
+          <div className="form-group">
+              <label for="amount">amount</label>
+              <input id="amount" className="form-control" name="amount" type="text" />
+          </div>
+          <div className="form-group">
+              <label for="description">description</label>
+              <input id="description" className="form-control" name="description" type="text" />
+          </div>
+          <div className="form-group">
+              <label for="date">date</label>
+              <input id="date" className="form-control" name="date" type="date" />
+          </div>
+
+        <button type="submit">Create a new bill</button>
       </form>
     );
   }
 }
 
 
-export class List extends React.Component {
+export class Bills extends React.Component {
 
   static get defaultProps() {
     return {items: []};
@@ -65,9 +85,8 @@ export default class App extends React.Component {
     var disabled = this.state.busy ? "disabled" : "";
     return (
       <div className={disabled}>
-        <Form updateRecord={this.updateRecord.bind(this)}/>
-        <List items={this.state.items.map(item => item.label)}/>
-        <button onClick={this.syncRecords.bind(this)} disabled={disabled}>Sync!</button>
+        <BillCreationForm updateRecord={this.updateRecord.bind(this)}/>
+        <Bills items={this.state.items.map(item => item.label)}/>
         <div className="error">{this.state.error}</div>
       </div>
     );

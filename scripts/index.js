@@ -1,3 +1,9 @@
+/*
+ * Webpack inclusions.
+ */
+require("bootstrap/less/bootstrap.less");
+require("./style/app.less")
+
 import "babel/polyfill";
 import btoa from "btoa";
 import React from "react";
@@ -6,15 +12,20 @@ import { Store } from "./store";
 import Kinto from "kinto";
 
 // Take username from location hash (With default value):
-const user = window.location.hash = (window.location.hash.slice(1) || "public-demo");
-const userpass64 = btoa(user + ":s3cr3t");
+const project = window.location.hash = (window.location.hash.slice(1) || "public-demo");
+const userpass64 = btoa(project + ":s3cr3t");
 
 // Use Mozilla demo server with Basic authentication:
-const server = "https://kinto.dev.mozaws.net/v1";
+const server = "http://localhost:8888/v1";
 const auth = "Basic " + userpass64;
-const kinto = new Kinto({remote: server, headers: {Authorization: auth}});
+const options = {
+    remote: server,
+    headers: {Authorization: auth}
+};
 
-const store = new Store(kinto, "items");
+const kinto = new Kinto(options);
+
+const store = new Store(kinto, "bills");
 
 // Make sure local data depend on current user.
 // Note: Kinto.js will have an option: https://github.com/Kinto/kinto.js/pull/111
