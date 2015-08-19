@@ -3,20 +3,44 @@ import { Link } from "react-router";
 
 export class BillCreationForm extends React.Component {
 
-  onFormSubmit(event) {
-    event.preventDefault();
-    var record = {
-        payer: event.target.payer.value,
-        owers: event.target.owers.value,
-        description: event.target.description.value,
-        amount: event.target.amount.value,
-        date: event.target.date.value
-    };
-
-    this.updateRecord(record);
+  clearForm() {
+      var list = document.querySelectorAll("#bill-creation-form input");
+      Array.map(list, i => { i.value = ""});
   }
 
-  updateRecord(record) {
+  onFormSubmit(event) {
+      event.preventDefault();
+      var clicked = event.nativeEvent.explicitOriginalTarget.id;
+
+      this.handleFormEvent(event);
+      console.log("cliked");
+      if (clicked === "submit-and-clear") {
+          this.clearForm();
+      } else if (clicked === "submit-and-redirect"){
+          this.context.router.transitionTo('bill-list');
+      }
+  }
+
+  handleFormEvent(event) {
+
+      var record = this.buildRecord(event);
+      this.saveRecord(record);
+  }
+
+  buildRecord(event) {
+      return {
+          payer: event.target.payer.value,
+          owers: event.target.owers.value,
+          description: event.target.description.value,
+          amount: event.target.amount.value,
+          date: event.target.date.value
+      };
+  }
+
+  /**
+   * Save an existing record, or create a new one.
+   **/
+  saveRecord(record) {
     this.props.store.create(record);
   }
 
@@ -44,13 +68,17 @@ export class BillCreationForm extends React.Component {
               <input id="date" className="form-control" name="date" type="date" />
           </div>
 
-          <button type="submit" className="btn btn-primary">Submit</button>
-          <button type="button" className="btn btn-default">Submit and add a new one</button>
+          <button id="submit-and-redirect" type="submit" className="btn btn-primary">Submit</button>
+          <button id="submit-and-clear" type="submit" className="btn btn-default">Submit and add a new one</button>
       </form>
     );
   }
 }
 
+// Hackety hack in order to inject the router object in the context.
+BillCreationForm.contextTypes = {
+  router: React.PropTypes.func
+};
 
 export class Bills extends React.Component {
 
