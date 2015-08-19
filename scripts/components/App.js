@@ -1,12 +1,17 @@
 import React from "react";
-
+import { Link } from "react-router";
+import mixin from "react-mixin";
 
 export class BillCreationForm extends React.Component {
 
   onFormSubmit(event) {
     event.preventDefault();
     var record = {label: event.target.label.value};
-    this.props.updateRecord(record);
+    this.updateRecord(record);
+  }
+
+  updateRecord(record) {
+    this.props.store.create(record);
   }
 
   render() {
@@ -58,7 +63,7 @@ export class Bills extends React.Component {
 }
 
 
-export default class App extends React.Component {
+export class BillList extends React.Component {
 
   constructor(props) {
     super(props);
@@ -72,10 +77,6 @@ export default class App extends React.Component {
     this.props.store.load();
   }
 
-  updateRecord(record) {
-    this.props.store.create(record);
-  }
-
   syncRecords() {
     this.setState({busy: true, error: ""});
     this.props.store.sync();
@@ -85,9 +86,9 @@ export default class App extends React.Component {
     var disabled = this.state.busy ? "disabled" : "";
     return (
       <div className={disabled}>
-        <BillCreationForm updateRecord={this.updateRecord.bind(this)}/>
         <Bills items={this.state.items.map(item => item.label)}/>
         <div className="error">{this.state.error}</div>
+        <Link to="new-bill">HERE</Link>
       </div>
     );
   }

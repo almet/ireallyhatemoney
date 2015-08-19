@@ -7,12 +7,14 @@ require("./style/app.less")
 import "babel/polyfill";
 import btoa from "btoa";
 import React from "react";
-import App from "./components/App";
+import { BillList, BillCreationForm } from "./components/App";
 import { Store } from "./store";
 import Kinto from "kinto";
+import Router, { Route, DefaultRoute }  from "react-router";
 
 // Take username from location hash (With default value):
-const project = window.location.hash = (window.location.hash.slice(1) || "public-demo");
+// const project = window.location.hash = (window.location.hash.slice(1) || "public-demo");
+const project = "public-demo";
 const userpass64 = btoa(project + ":s3cr3t");
 
 // Use Mozilla demo server with Basic authentication:
@@ -31,4 +33,23 @@ const store = new Store(kinto, "bills");
 // Note: Kinto.js will have an option: https://github.com/Kinto/kinto.js/pull/111
 store.collection.db.dbname = userpass64 + store.collection.db.dbname;
 
-React.render(<App store={store}/>, document.getElementById("app"));
+var Home = React.createClass({
+  render: function () {
+    return <h1>Home</h1>;
+  }
+});
+
+// XXX redirect by default to the bill list.
+var routes = (
+    <Route>
+        <DefaultRoute handler={BillList}/>
+        <Route name="new-bill"
+               handler={BillCreationForm} />
+       <Route name="bill-list"
+              handler={BillList} />
+    </Route>
+);
+
+Router.run(routes, function (Handler) {
+    React.render(<Handler store={store}/>, document.getElementById("app"));
+})

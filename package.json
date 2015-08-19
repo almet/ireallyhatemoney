@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/Kinto/kinto-react-boilerplate#readme",
   "dependencies": {
+    "bootstrap": "^3.3.5",
     "btoa": "^1.1.2",
     "react": "^0.13.3",
-    "bootstrap": "^3.3.5",
     "react-router": "^0.13.3"
   },
   "devDependencies": {
