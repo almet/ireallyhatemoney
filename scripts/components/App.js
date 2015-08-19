@@ -1,12 +1,18 @@
 import React from "react";
 import { Link } from "react-router";
-import mixin from "react-mixin";
 
 export class BillCreationForm extends React.Component {
 
   onFormSubmit(event) {
     event.preventDefault();
-    var record = {label: event.target.label.value};
+    var record = {
+        payer: event.target.payer.value,
+        owers: event.target.owers.value,
+        description: event.target.description.value,
+        amount: event.target.amount.value,
+        date: event.target.date.value
+    };
+
     this.updateRecord(record);
   }
 
@@ -27,7 +33,7 @@ export class BillCreationForm extends React.Component {
           </div>
           <div className="form-group">
               <label for="amount">amount</label>
-              <input id="amount" className="form-control" name="amount" type="text" />
+              <input id="amount" className="form-control" name="amount" type="float" />
           </div>
           <div className="form-group">
               <label for="description">description</label>
@@ -38,7 +44,8 @@ export class BillCreationForm extends React.Component {
               <input id="date" className="form-control" name="date" type="date" />
           </div>
 
-        <button type="submit">Create a new bill</button>
+          <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="button" className="btn btn-default">Submit and add a new one</button>
       </form>
     );
   }
@@ -53,11 +60,27 @@ export class Bills extends React.Component {
 
   render() {
     return (
-      <ul>{
-        this.props.items.map((label, i) => {
-          return <li key={i}>{label}</li>;
-        })
-      }</ul>
+      <div id="billList">
+          <table className="table">
+              <thead>
+                  <tr><th>Who paid?</th><th>What?</th><th>How much?</th><th>For whom?</th><th>Date</th></tr>
+              </thead>
+              <tbody>
+              {
+                this.props.items.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                        <td>{item.payer}</td>
+                        <td>{item.description}</td>
+                        <td>{item.amount}</td>
+                        <td>{item.owers}</td>
+                        <td>{item.date}</td>
+                    </tr>);
+                })
+              }
+              </tbody>
+          </table>
+      </div>
     );
   }
 }
@@ -86,7 +109,7 @@ export class BillList extends React.Component {
     var disabled = this.state.busy ? "disabled" : "";
     return (
       <div className={disabled}>
-        <Bills items={this.state.items.map(item => item.label)}/>
+        <Bills items={this.state.items}/>
         <div className="error">{this.state.error}</div>
         <Link to="new-bill">HERE</Link>
       </div>

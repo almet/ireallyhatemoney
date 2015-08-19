@@ -33,12 +33,6 @@ const store = new Store(kinto, "bills");
 // Note: Kinto.js will have an option: https://github.com/Kinto/kinto.js/pull/111
 store.collection.db.dbname = userpass64 + store.collection.db.dbname;
 
-var Home = React.createClass({
-  render: function () {
-    return <h1>Home</h1>;
-  }
-});
-
 // XXX redirect by default to the bill list.
 var routes = (
     <Route>
