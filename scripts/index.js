@@ -7,36 +7,32 @@ require("./style/app.less")
 import "babel/polyfill";
 import btoa from "btoa";
 import React from "react";
-import { BillList, BillCreationForm } from "./components/App";
+import { LoginForm } from "./components/Login";
+import { ProjectList, ProjectCreationForm } from "./components/Project";
+import { BillList, BillCreationForm } from "./components/Bill";
 import { Store } from "./store";
 import Kinto from "kinto";
 import Router, { Route, DefaultRoute }  from "react-router";
 
-// Take username from location hash (With default value):
-// const project = window.location.hash = (window.location.hash.slice(1) || "public-demo");
-const project = "public-demo";
-const userpass64 = btoa(project + ":s3cr3t");
-
 // Use Mozilla demo server with Basic authentication:
 const server = "https://kinto.dev.mozaws.net/v1";
-const auth = "Basic " + userpass64;
 const options = {
-    remote: server,
-    headers: {Authorization: auth}
+  remote: server
 };
 
 const kinto = new Kinto(options);
 
-const store = new Store(kinto, "bills");
+const store = new Store(kinto);
 
-// Make sure local data depend on current user.
-// Note: Kinto.js will have an option: https://github.com/Kinto/kinto.js/pull/111
-store.collection.db.dbname = userpass64 + store.collection.db.dbname;
-
-// XXX redirect by default to the bill list.
 var routes = (
     <Route>
-        <DefaultRoute handler={BillList}/>
+        <DefaultRoute handler={LoginForm}/>
+        <Route name="login"
+               handler={LoginForm} />
+        <Route name="new-project"
+               handler={ProjectCreationForm} />
+       <Route name="project-list"
+              handler={ProjectList} />
         <Route name="new-bill"
                handler={BillCreationForm} />
        <Route name="bill-list"

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 
 export class BillCreationForm extends React.Component {
-  constructor(props) {
+    constructor(props) {
       super(props);
       this.state = {
           action: "submit-and-redirect"
