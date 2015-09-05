@@ -1,0 +1,1 @@
+This file is requested by offline.js to check the connection status.

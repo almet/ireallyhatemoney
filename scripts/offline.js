@@ -42,7 +42,7 @@
     checks: {
       xhr: {
         url: function() {
-          return "/favicon.ico?_=" + (Math.floor(Math.random() * 1000000000));
+          return "/offline-test.txt?_=" + (Math.floor(Math.random() * 1000000000));
         },
         timeout: 5000
       },
