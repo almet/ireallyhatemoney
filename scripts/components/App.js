@@ -1,3 +1,6 @@
+import "bootstrap/less/bootstrap.less";
+import "../style/app.less";
+
 import React from "react";
 import { Link } from "react-router";
 
