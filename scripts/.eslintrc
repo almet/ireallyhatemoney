@@ -1,0 +1,11 @@
+{
+    "rules": {},
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "ecmaFeatures": {
+        "modules": true,
+        "jsx": true
+    }
+}
