@@ -31,7 +31,6 @@ export class BillCreationForm extends React.Component {
   }
 
   handleFormEvent(event) {
-
       var record = this.buildRecord(event);
       this.saveRecord(record);
   }
@@ -97,7 +96,7 @@ export class BillList extends React.Component {
 
   render() {
     return (
-      <div id="billList">
+      <div id="bill-list">
           <table className="table table-striped">
               <thead>
                   <tr><th>Who paid?</th><th>What?</th><th>How much?</th><th>For whom?</th><th>Date</th></tr>
@@ -107,7 +106,7 @@ export class BillList extends React.Component {
                 this.props.items.map((item, i) => {
                   console.log(item);
                   return (
-                    <tr key={i} status="{item._status}">
+                    <tr key={i} data-status={item._status} className="bill">
                         <td>{item.payer}</td>
                         <td>{item.description}</td>
                         <td>{item.amount}</td>
