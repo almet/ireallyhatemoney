@@ -89,7 +89,7 @@ BillCreationForm.contextTypes = {
   router: React.PropTypes.func
 };
 
-export class Bills extends React.Component {
+export class BillList extends React.Component {
 
   static get defaultProps() {
     return {items: []};
@@ -123,7 +123,7 @@ export class Bills extends React.Component {
 }
 
 
-export class BillList extends React.Component {
+export class BillView extends React.Component {
 
   constructor(props) {
     super(props);
@@ -146,7 +146,7 @@ export class BillList extends React.Component {
     var disabled = this.state.busy ? "disabled" : "";
     return (
       <div className={disabled}>
-        <Bills items={this.state.items}/>
+        <BillList items={this.state.items}/>
         <div className="error">{this.state.error}</div>
         <Link to="new-bill">HERE</Link>
       </div>

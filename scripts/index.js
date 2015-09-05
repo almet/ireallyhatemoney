@@ -7,7 +7,7 @@ require("./style/app.less")
 import "babel/polyfill";
 import btoa from "btoa";
 import React from "react";
-import { BillList, BillCreationForm } from "./components/App";
+import { BillView, BillCreationForm } from "./components/App";
 import { Store } from "./store";
 import Kinto from "kinto";
 import Router, { Route, DefaultRoute }  from "react-router";
@@ -36,11 +36,11 @@ store.collection.db.dbname = userpass64 + store.collection.db.dbname;
 // XXX redirect by default to the bill list.
 var routes = (
     <Route>
-        <DefaultRoute handler={BillList}/>
+        <DefaultRoute handler={BillView}/>
         <Route name="new-bill"
                handler={BillCreationForm} />
        <Route name="bill-list"
-              handler={BillList} />
+              handler={BillView} />
     </Route>
 );
 
