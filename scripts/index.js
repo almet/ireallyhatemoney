@@ -1,9 +1,6 @@
 /*
  * Webpack inclusions.
  */
-require("bootstrap/less/bootstrap.less");
-require("./style/app.less")
-
 import "babel/polyfill";
 import btoa from "btoa";
 import React from "react";
