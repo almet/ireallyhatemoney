@@ -39,12 +39,6 @@ export class Store extends EventEmitter {
     }).catch(this.onError.bind(this));
   }
 
-  enqueueSync() {
-      if(Offline.state == "up"){
-          sync();
-      }
-  }
-
   sync() {
     return this.collection.sync()
       .then((res) => {
