@@ -97,7 +97,7 @@ export class BillList extends React.Component {
 
   render() {
     return (
-      <div id="billList">
+      <div id="bill-list">
           <table className="table table-striped">
               <thead>
                   <tr><th>Who paid?</th><th>What?</th><th>How much?</th><th>For whom?</th><th>Date</th></tr>
@@ -106,13 +106,14 @@ export class BillList extends React.Component {
               {
                 this.props.items.map((item, i) => {
                   return (
-                    <tr key={i}>
+                    <tr key={i} className="bill" data-status={item._status}>
                         <td>{item.payer}</td>
                         <td>{item.description}</td>
                         <td>{item.amount}</td>
                         <td>{item.owers}</td>
                         <td>{item.date}</td>
-                    </tr>);
+                    </tr>
+                  );
                 })
               }
               </tbody>
